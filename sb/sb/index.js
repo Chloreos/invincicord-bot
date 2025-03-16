@@ -25,7 +25,7 @@ client.on("messageReactionAdd", async (reaction) => {
     for (let i = 0; i < args.length; i++) {
       setTimeout(()=>{
         client.channels.cache.get(coinChannelId).send(`$add-money <@${args[i]}> 100`)
-      }, 15000*(i))
+      }, 11000*(i))
     }
   }
   }
