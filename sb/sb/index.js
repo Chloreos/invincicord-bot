@@ -20,7 +20,7 @@ client.on("messageReactionAdd", async (reaction) => {
   reactorId = JSON.parse(JSON.stringify(reaction.users["_cache"]))[0].id
   if (reaction.emoji.name == "✅" && reaction.message.author.id == `${pylonBotId}` && reaction.message.guild.members.cache.get(reactorId)["_roles"].includes(modRoleId)) {
     args = reaction.message.content
-    args = args.replaceAll(/<|>|@/g, '')
+    args = args.replaceAll(/<|>|@|!/g, '')
     args = args.split(", ")
     for (let i = 0; i < args.length; i++) {
       setTimeout(()=>{
