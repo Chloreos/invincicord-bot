@@ -29,7 +29,7 @@ client.on("messageReactionAdd", async (reaction) => {
     }
   }
   }
-} catch (err) {client.channels.cache.get(coinChannelId).send('`There was an error`')}
+} catch (err) {client.channels.cache.get(reportChannelId).send('`There was an error`')}
 })
 
 client.login(`${token}`)
