@@ -16,8 +16,9 @@ pylonBotId = "270148059269300224"
 
 client.on("messageReactionAdd", async (reaction) => {
   try {
+  if (reaction.message.channelId == reportChannelId) {
   reactorId = JSON.parse(JSON.stringify(reaction.users["_cache"]))[0].id
-  if (reaction.emoji.name == "✅" && reaction.message.author.id == `${pylonBotId}` && reaction.message.channelId == reportChannelId && reaction.message.guild.members.cache.get(reactorId)["_roles"].includes(modRoleId)) {
+  if (reaction.emoji.name == "✅" && reaction.message.author.id == `${pylonBotId}` && reaction.message.guild.members.cache.get(reactorId)["_roles"].includes(modRoleId)) {
     args = reaction.message.content
     args = args.replaceAll(/<|>|@/g, '')
     args = args.split(", ")
@@ -27,7 +28,8 @@ client.on("messageReactionAdd", async (reaction) => {
       }, 15000*(i+1))
     }
   }
-} catch (err) {reaction.message.channel.send('`There was an error.`')}
+  }
+} catch (err) {client.channels.cache.get(coinChannelId).send('`There was an error`')}
 })
 
 client.login(`${token}`)
