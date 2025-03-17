@@ -36,7 +36,7 @@ client.on("messageReactionAdd", async (reaction) => {
           coinStatus = false
           client.channels.cache.get(reportChannelId).send('`Done distributing coins`')
         }
-      }, 10000*(i))
+      }, 10000*i)
     }
   }
   }
