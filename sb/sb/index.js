@@ -27,13 +27,13 @@ client.on("messageReactionAdd", async (reaction) => {
     args = args.replaceAll(/<|>|@|!/g, '')
     args = args.split(", ")
     coinStatus = true
-    i2 = 0
+    j = 0
     coinMsgSent = await client.channels.cache.get(reportChannelId).send('`Begun distributing coins`')
     for (let i = 0; i < args.length; i++) {
       setTimeout(()=>{
         client.channels.cache.get(coinChannelId).send(`$add-money <@${args[i]}> 100`)
-        i2++
-        if (i2 == args.length) {
+        j++
+        if (j == args.length) {
           coinStatus = false
           coinMsgSent.edit('`Done distributing coins`')
         }
