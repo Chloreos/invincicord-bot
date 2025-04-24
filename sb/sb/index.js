@@ -14,26 +14,32 @@ coinChannelId = "840431174845071401"
 modRoleId = "839237255158956042"
 pylonBotId = "270148059269300224"
 coinStatus = false
+reactionEmojis = ["✅","1️⃣","2️⃣","3️⃣","4️⃣","5️⃣","6️⃣","7️⃣","8️⃣","9️⃣","🔟"]
 
 client.on("messageReactionAdd", async (reaction) => {
   try {
-  if (reaction.message.channelId == reportChannelId) {
+  if (reaction.message.channelId == reportChannelId && reaction.message.reactions.cache.size == 1) {
   reactorId = JSON.parse(JSON.stringify(reaction.users["_cache"]))[0].id
-  if (reaction.emoji.name == "✅" && reaction.message.author.id == `${pylonBotId}` && reaction.count == '1' && reaction.message.guild.members.cache.get(reactorId)["_roles"].includes(modRoleId)) {
+  if (reactionEmojis.includes(reaction.emoji.name) && reaction.message.author.id == `${pylonBotId}` && reaction.count == '1' && reaction.message.guild.members.cache.get(reactorId)["_roles"].includes(modRoleId)) {
     if (coinStatus == true) {
-      client.channels.cache.get(reportChannelId).send('`Currently distributing coins.`')
+      client.channels.cache.get(reportChannelId).send('`Not done distributing coins.`')
     } else {
     args = reaction.message.content
     args = args.replaceAll(/<|>|@|!/g, '')
     args = args.split(", ")
+    if (reactionEmojis.indexOf(reaction.emoji.name) == 0 || reactionEmojis.indexOf(reaction.emoji.name) > args.length) {
+      n = args.length
+    } else {
+      n = reactionEmojis.indexOf(reaction.emoji.name)
+    }
     coinStatus = true
-    i2 = 0
+    j = 0
     coinMsgSent = await client.channels.cache.get(reportChannelId).send('`Begun distributing coins`')
-    for (let i = 0; i < args.length; i++) {
+    for (let i = 0; i < n; i++) {
       setTimeout(()=>{
         client.channels.cache.get(coinChannelId).send(`$add-money <@${args[i]}> 100`)
-        i2++
-        if (i2 == args.length) {
+        j++
+        if (j == n) {
           coinStatus = false
           coinMsgSent.edit('`Done distributing coins`')
         }
@@ -42,7 +48,10 @@ client.on("messageReactionAdd", async (reaction) => {
   }
   }
 }
-} catch (err) {client.channels.cache.get(reportChannelId).send('`There was an error`')}
+} catch (err) {
+  client.channels.cache.get(reportChannelId).send('`There was an error`')
+  console.error(err)
+}
 })
 
 client.login(`${token}`)
