@@ -23,7 +23,7 @@ client.on("messageReactionAdd", async (reaction) => {
   reactorId = JSON.parse(JSON.stringify(reaction.users["_cache"]))[0].id
   if (reactionEmojis.includes(reaction.emoji.name) && reaction.message.author.id == `${pylonBotId}` && reaction.count == '1' && reaction.message.guild.members.cache.get(reactorId)["_roles"].includes(modRoleId)) {
     if (coinStatus == true) {
-      client.channels.cache.get(reportChannelId).send('`Not done distributing coins.`')
+      client.channels.cache.get(reportChannelId).send('`Busy distributing other coins. Previous message will indicate when bot is ready for this report. `' + `<@${reactorId}>`)
     } else {
     args = reaction.message.content
     args = args.replaceAll(/<|>|@|!/g, '')
@@ -43,10 +43,12 @@ client.on("messageReactionAdd", async (reaction) => {
         if (j == n) {
           coinStatus = false
           coinMsgSent.edit('`Done distributing coins`')
+          setTimeout(()=>{
+            client.channels.cache.get(coinLogChannelId).send(`$add-money bank ${reactorId} 50`)
+          }, 10000)
         }
       }, 10000*i)
     }
-    client.channels.cache.get(coinLogChannelId).send(`$add-money bank ${reactorId} 50`)
   }
   }
 }
