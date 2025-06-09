@@ -42,9 +42,9 @@ client.on("messageReactionAdd", async (reaction) => {
         client.channels.cache.get(coinChannelId).send(`$add-money <@${args[i]}> 100`)
         j++
         if (j == n) {
-          coinStatus = false
-          coinMsgSent.edit('`Done distributing coins`')
           setTimeout(()=>{
+            coinStatus = false
+            coinMsgSent.edit('`Done distributing coins`')
             client.channels.cache.get(coinLogChannelId).send(`$add-money bank ${reactorId} 50`)
           }, 10000)
         }
