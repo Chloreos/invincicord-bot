@@ -10,6 +10,7 @@ client.on('ready', async () => {
 
 const token = "" //put account token here
 reportChannelId = "837928153774424084"
+coinLogChannelId = "1259285090505068636"
 coinChannelId = "840431174845071401"
 modRoleId = "839237255158956042"
 pylonBotId = "270148059269300224"
@@ -45,6 +46,7 @@ client.on("messageReactionAdd", async (reaction) => {
         }
       }, 10000*i)
     }
+    client.channels.cache.get(coinLogChannelId).send(`$add-money bank ${reactorId} 50`)
   }
   }
 }
