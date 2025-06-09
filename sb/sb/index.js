@@ -24,6 +24,7 @@ client.on("messageReactionAdd", async (reaction) => {
   if (reactionEmojis.includes(reaction.emoji.name) && reaction.message.author.id == `${pylonBotId}` && reaction.count == '1' && reaction.message.guild.members.cache.get(reactorId)["_roles"].includes(modRoleId)) {
     if (coinStatus == true) {
       client.channels.cache.get(reportChannelId).send('`Busy distributing other coins. Previous message will indicate when bot is ready for this report. `' + `<@${reactorId}>`)
+      reaction.message.reactions.removeAll()
     } else {
     args = reaction.message.content
     args = args.replaceAll(/<|>|@|!/g, '')
