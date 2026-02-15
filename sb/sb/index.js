@@ -6,6 +6,31 @@ const client = new Client({
 
 client.on('ready', async () => {
     console.log(`${client.user.username} is ready!`);
+    let reportChannel = await client.channels.fetch('863999579133575189');
+    let startTime = new Date();
+    sendTopSlash = () => {
+      try {
+        reportChannel.sendSlash('282859044593598464', 'top', undefined, 'Day')
+      } catch (err) {
+        client.channels.cache.get(reportChannelId).send('`There was an error`')
+        console.error(err)
+      }
+    }
+    topEveryHour = () => {
+      sendTopSlash()
+      setInterval(() => sendTopSlash(), 3600000)
+    }
+    nextTime = 3480000 - startTime.getMinutes() * 60 * 1000
+    if (nextTime < 0) {
+      nextTime += 3600000
+    }
+    if (startTime.getMinutes() * 60 * 1000 == 3480000) {
+      topEveryHour()
+    } else {
+      setTimeout(() => {
+        topEveryHour()
+      }, nextTime)
+    }
 });
 
 const token = "" //put account token here
