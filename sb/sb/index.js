@@ -6,13 +6,13 @@ const client = new Client({
 
 client.on('ready', async () => {
     console.log(`${client.user.username} is ready!`);
-    let reportChannel = await client.channels.fetch('863999579133575189');
+    let chatterChannel = await client.channels.fetch('1471654300760408146');
     let startTime = new Date();
     sendTopSlash = () => {
       try {
-        reportChannel.sendSlash('282859044593598464', 'top', undefined, 'Day')
+        chatterChannel.sendSlash('282859044593598464', 'top', undefined, 'Day')
       } catch (err) {
-        client.channels.cache.get(reportChannelId).send('`There was an error`')
+        chatterChannel.send('`There was an error`')
         console.error(err)
       }
     }
