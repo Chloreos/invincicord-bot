@@ -10,7 +10,7 @@ client.on('ready', async () => {
     let startTime = new Date();
     sendTopSlash = () => {
       try {
-        chatterChannel.sendSlash('282859044593598464', 'top', undefined, 'Day')
+        chatterChannel.sendSlash('491769129318088714', 'top')
       } catch (err) {
         chatterChannel.send('`There was an error`')
         console.error(err)
